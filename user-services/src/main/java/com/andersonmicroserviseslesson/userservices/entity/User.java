@@ -23,5 +23,5 @@ public class User {
     @Column(name = "email")
     private String email;
     @Column(name = "department_id")
-    private Long departmentId;
+    private Long plateId;
 }
