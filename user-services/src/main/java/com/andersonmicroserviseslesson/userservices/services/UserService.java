@@ -1,19 +1,20 @@
 package com.andersonmicroserviseslesson.userservices.services;
 
-import com.andersonmicroserviseslesson.userservices.VO.Department;
+import com.andersonmicroserviseslesson.userservices.VO.Plate;
 import com.andersonmicroserviseslesson.userservices.VO.ResponseTemplateVO;
-import com.andersonmicroserviseslesson.userservices.controller.UserController;
 import com.andersonmicroserviseslesson.userservices.entity.User;
 import com.andersonmicroserviseslesson.userservices.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Slf4j
 public class UserService {
     private UserRepository userRepository;
     private RestTemplate restTemplate;
-    private org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserService.class);
+
 
     @Autowired
     public UserService(UserRepository userRepository, RestTemplate restTemplate) {
@@ -25,15 +26,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public ResponseTemplateVO getUserWithDepartment(Long userId) {
+    public ResponseTemplateVO getUserWithPlate(Long userId) {
         log.info("WE ARE IN GET USER WITH DEPARTMENT SERVICE!!!");
         ResponseTemplateVO vo = new ResponseTemplateVO();
         User user = userRepository.findByUserId(userId);
-        Department department =
-                restTemplate.getForObject("http://DEPARTMENT-SERVICE/departments/" + user.getDepartmentId()
-                        ,Department.class);
+        Plate plate =
+                restTemplate.getForObject("http://DEPARTMENT-SERVICE/departments/" + user.getPlateId()
+                        , Plate.class);
         vo.setUser(user);
-        vo.setDepartment(department);
+        vo.setPlate(plate);
         return vo;
     }
 }

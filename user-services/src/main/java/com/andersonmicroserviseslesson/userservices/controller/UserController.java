@@ -3,15 +3,16 @@ package com.andersonmicroserviseslesson.userservices.controller;
 import com.andersonmicroserviseslesson.userservices.VO.ResponseTemplateVO;
 import com.andersonmicroserviseslesson.userservices.entity.User;
 import com.andersonmicroserviseslesson.userservices.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@Slf4j
 public class UserController {
 
     private UserService userService;
-    private org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     public UserController(UserService userService) {
@@ -27,6 +28,6 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseTemplateVO getUserWithDepartment(@PathVariable("id") Long UserId){
         log.info("We are in getUserWithDepartment method");
-        return userService.getUserWithDepartment(UserId);
+        return userService.getUserWithPlate(UserId);
     }
 }
