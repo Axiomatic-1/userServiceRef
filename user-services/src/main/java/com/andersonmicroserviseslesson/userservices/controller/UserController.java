@@ -3,6 +3,10 @@ package com.andersonmicroserviseslesson.userservices.controller;
 import com.andersonmicroserviseslesson.userservices.VO.ResponseTemplateVO;
 import com.andersonmicroserviseslesson.userservices.entity.User;
 import com.andersonmicroserviseslesson.userservices.services.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +24,23 @@ public class UserController {
     }
 
     @PostMapping("/")
+    @ApiOperation(value = "Сохрнение пользователя")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 400, message = "Error")
+    })
     public User saveUser(@RequestBody User user){
         log.info("We are saved user :" + user.toString());
         return userService.saveUser(user);
     }
 
     @GetMapping("/{id}")
-    public ResponseTemplateVO getUserWithDepartment(@PathVariable("id") Long UserId){
+    @ApiOperation(value = "Получаем пользователя по ИД")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 400, message = "Error")
+    })
+    public ResponseTemplateVO getUserWithDepartment(@ApiParam(value = "ID пользователя")@PathVariable("id") Long UserId){
         log.info("We are in getUserWithDepartment method");
         return userService.getUserWithPlate(UserId);
     }
